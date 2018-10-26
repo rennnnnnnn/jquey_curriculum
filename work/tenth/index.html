@@ -26,7 +26,9 @@
     </div>
     <script src="../../common/js/jquery.js"></script>
     <script>
-      // 楽天ブックスの総合検索APIを使って製作してください。
+      // $function(){
+      //   $("js-search-button").on('click',function(){
+      // // 楽天ブックスの総合検索APIを使って製作してください。
       // answerの挙動を良く見てね！
       //
       // https://webservice.rakuten.co.jp/api/booksbooksearch/
@@ -57,13 +59,74 @@
       //   datatype: 'json',
       //   data: {
       //     // 「区分:サービス固有パラメーター」を確認して、必要な情報をdata内に入れましょう。
-      //     applicationId: '1019399324990976605', // (今回はこのIDを使用してください)
-      //     booksGenreId: '001'
+      //   applicationId: '1019399324990976605', // (今回はこのIDを使用してください)
+      //   booksGenreId: '001'
+      //   hits: '20',
+      //   page: '2',
       //   },
       // }).done(function(data) {
+      //   if(data > 0){
+
+
+      //   }
+
+      //   if(data.count === 0) {
+
+      //   }
+
       //   // この中にデータ取得後の動きを記述していきます。
       // });
-      //
+      // });
+      $(function(){
+      $('#js-search-button').on('click',function(){ //js-search-button click
+        var keyword = $('#js-search-word').val(); //js-search-wordの値を取得して代入
+        var preword = '';　//一個前のキーワード　
+        if(keyword === preword) {　//同じキーワードの場合ページを追加して上に足していく 
+          page++;
+        } else{
+          page = 1;
+        }
+
+
+
+        $.ajax({
+        url: 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20130522',
+        type: 'GET',
+        datatype: 'json',
+        data: {
+          // 「区分:サービス固有パラメーター」を確認して、必要な情報をdata内に入れましょう。
+        applicationId: '1019399324990976605', // (今回はこのIDを使用してください)
+        booksGenreId: '001',
+        hits: 20,
+        keyword : keyword, //js-search-word の値
+        page : page, //page番号
+        },
+      }).done(function(data) {
+        if(data.count > 0){
+            $('ul').empty();//空にしないと下に更新されていく
+            $('.coment').css('display','none');
+            $.each(data.Items,function(i,item){ //第一引数：dataのItems(商品情報）を　ループ処理させる　第二引数　処理したい命令 連番と値をとる　
+              console.log(i,item);
+              var list = $('<li class="lists__item">' + '<div class="lists__item__inner">' + '<a href="' +
+                item.Item.itemUrl + '"class="lists__item__link" target="_blank">' + '<img src="' + item.Item
+                .largeImageUrl + '" class="lists__item__img" alt="' + item.Item.title + '">' +
+                '<p class="lists__item__detail">作品名：　' + item.Item.title + '</p>' +
+                '<p class="lists__item__detail">作者　：　' + item.Item.author + '</p>' +
+                '<p class="lists__item__detail">出版社：　' + item.Item.publisherName + '</p>' + '</a>' +
+                '</div>' + '</li>');
+              $('ul').append(list); //ulのDOMの中に入れる listを入れる 対象要素内の後に入れる
+            })
+          }
+          if (data.count === 0) {//検索がヒットしないとき
+            $('ul').empty(); //ul要素を消して新しくする liを消して表示する
+            $('ul').before('<div class="coment"></div>')
+            $('.coment').html('<p class="message">検索結果が見つかりませんでした。<br>別のキーワードで検索して下さい。</p>');
+          }
+        }).fail(function(data){
+            $('.coment').html('<p class="message">通信エラー</p>');
+        })
+      });
+      });
     </script>
   </body>
 </html>

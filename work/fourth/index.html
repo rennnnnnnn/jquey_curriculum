@@ -47,6 +47,13 @@
     </div>
     <script src="../../common/js/jquery.js"></script>
     <script>
+$(function(){
+    $('.menu__list li').hover(function(){ //menu__listのliをhoverする
+      $(this).children('p').next().stop().slideDown();
+      }, function(){ //menu__list li の子要素の中のpの隣をslidedown
+      $(this).children('p').next().stop().slideUp();　//menu__list liの子要素pの隣の要素をslideup
+    });
+});
       // 今回やるのはドロップメニューです。
       // メニューをhoverすると隠れている中のメニューが表示され、メニューから離れると中のメニューが非表示されるプログラムです。
       // [使用するメソッド]
@@ -59,3 +66,4 @@
     </script>
   </body>
 </html>
+

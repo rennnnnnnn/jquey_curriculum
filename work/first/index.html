@@ -79,6 +79,62 @@
 // 第8問  id='q8'の要素をhoverしたらlargeというクラスを付与し、hoverが外れたら、クラスを削除せよ。
 // 第9問  id='q9'の要素をクリックしたらこの要素に設定してあるdata属性をconsoleに表示せよ。
 // 第10問 id='q10'の子要素をクリックしたら、その要素のインデックスと等しいid='q11'の子要素にlargeというクラスを追加せよ。
+  $(function() {
+      // 第1門answer
+    $("#q1").css('color', 'red'); //セレクタ：処理対象となるDOM要素を指定する　メソッド：処理
+    // 第2門answer
+    $('#q2').click(function() {　//q2をclickすると以下の処理をする
+      $(this).css('background-color','cadetblue');
+    });
+    // 第3門answer
+    // $('#q3').click(fadeOut);
+    // function fadeOut() {
+    //   $(this).fadeOut(2000);
+    // }
+    $('#q3').click(function() {
+      $(this).fadeOut(2000); //引数2秒でfadeout
+    });
+    // 第4門answer
+    $('#q4').click(function() {
+      $(this).prepend('DOMの中の前')　//要素の前に引数で指定したコンテンツを挿入
+             .append('DOMの中の後')
+             .before('DOMの前')
+             .after('DOMの後');
+    });
+    // 第5門answer
+    $('#q5').click(function() {
+      $(this).addClass('large');
+    });
+    // 第6門answer
+    $('#q6').click(function() {
+      $(this).animate({//cssのプロパティを一定時間かけて変更するメソッド
+        'marginLeft': 100,
+        'marginTop': 100
+      }, 2000);
+    });
+    // 第7門answer
+    $('#q7').find('li').click(function() { //q7から引数liを取ってくる　
+      var targetNum = $(this).index();　//なん番目の要素か教える
+      console.log(targetNum);
+      alert(targetNum);
+    });
+    // 第8門answer
+    $('#q8').hover(function() {
+      $(this).addClass('large');
+    }, function() {
+      $(this).removeClass('large');
+    });
+    // 第9門answer
+    $('#q9').click(function() {
+      var text = $(this).data('text');
+      console.log(text);
+    });
+    // 第10門answer
+    $('#q10').find('li').click(function() {
+      var num = $(this).index();
+      $('#q11').find('li').eq(num).addClass('large');//index()で取得された値（何番目）をeq()の引数に入れることによって、#q10と対応した#q11のDOMを取得出来る。
+    });
+  });
 </script>
 </body>
 </html>
