@@ -1,31 +1,31 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <title>jQuery</title>
-    <link rel="stylesheet" href="../../common/css/reset.css">
-    <link rel="stylesheet" href="../../common/css/base.css">
-    <link rel="stylesheet" href="./css/style.css">
-  </head>
-  <body>
-    <div class="wrap">
-      <div class="container">
-        <div class="header">
-          <p class="header__title">Search Books!</p>
-        </div>
-        <div class="search">
-          <div class="search__text">
-            <input type="text" id="js-search-word" class="search__text__input" placeholder="検索する">
-          </div>
-          <button id="js-search-button" class="search__btn">検索する</button>
-        </div>
-        <ul class="lists"></ul>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <title>jQuery</title>
+  <link rel="stylesheet" href="../../common/css/reset.css">
+  <link rel="stylesheet" href="../../common/css/base.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="container">
+      <div class="header">
+        <p class="header__title">Search Books!</p>
       </div>
+      <div class="search">
+        <div class="search__text">
+          <input type="text" id="js-search-word" class="search__text__input" placeholder="検索する">
+        </div>
+        <button id="js-search-button" class="search__btn">検索する</button>
+      </div>
+      <ul class="lists"></ul>
     </div>
-    <script src="../../common/js/jquery.js"></script>
-    <script>
+  </div>
+  <script src="../../common/js/jquery.js"></script>
+  <script>
       // $function(){
       //   $("js-search-button").on('click',function(){
       // // 楽天ブックスの総合検索APIを使って製作してください。
@@ -77,56 +77,136 @@
       //   // この中にデータ取得後の動きを記述していきます。
       // });
       // });
+      // $(function(){
+      //   var preword = '';
+      //   var page = 1;
+      //   $('#js-search-button').on('click',function(){ //js-search-button click
+      //     searchBox();
+      //   });
+      //   function searchBox() {
+      //     var keyword = $('#js-search-word').val(); //js-search-wordの値を取得して代入
+      //     　//一個前のキーワード ずっとからなのでtrueにならない
+      //     console.log(keyword === preword)
+      //     console.log(keyword, preword)
+      //     if(keyword === preword) {　//同じキーワードの場合ページを追加して上に足していく
+      //       page++;
+      //     } else {
+      //       page = 1;
+      //       preword = keyword;
+      //     }
+      //     console.log(page);
+
+      //     $.ajax({
+      //       url: 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20130522',
+      //       type: 'GET',
+      //       datatype: 'json',
+      //       data: {
+      //         // 「区分:サービス固有パラメーター」を確認して、必要な情報をdata内に入れましょう。
+      //         applicationId: '1019399324990976605', // (今回はこのIDを使用してください)
+      //         booksGenreId: '001',
+      //         hits: 20,
+      //         keyword : keyword, //js-search-word の値
+      //         page : page, //page番号
+      //       },
+      //     }).done(function(data) {
+      //       chooseBox(data);
+      //     }).fail(function(){
+      //       fffBox();
+      //     });
+      //   }
+      //   function chooseBox(data){
+      //     if(data.count > 0){
+      //         // $('.lists').empty();//空にしないと下に更新されていく
+      //         // $('.coment').css('display','none');
+      //       var list = '';
+      //       $.each(data.Items,function(i,item){ //第一引数：dataのItems(商品情報）を　ループ処理させる　第二引数　処理したい命令 連番と値をとる　
+      //           // console.log(i,item);
+      //         list += '<li class="lists__item">' +
+      //         '<div class="lists__item__inner">' +
+      //         '<a href="' + item.Item.itemUrl + '"class="lists__item__link" target="_blank">' +
+      //         '<img src="' + item.Item.largeImageUrl + '" class="lists__item__img" alt="' + item.Item.title + '">' +
+      //         '<p class="lists__item__detail">作品名：　' + item.Item.title + '</p>' +
+      //         '<p class="lists__item__detail">作者　：　' + item.Item.author + '</p>' +
+      //         '<p class="lists__item__detail">出版社：　' + item.Item.publisherName + '</p>' +
+      //         '</a>' +
+      //         '</div>' +
+      //         '</li>';
+      //       })
+      //         $('.lists').prepend(list); //ulのDOMの中に入れる listを入れる 対象要素内の後に入れる
+      //     }
+      //     if (data.count === 0) {//検索がヒットしないとき
+      //       $('.lists').empty(); //ul要素を消して新しくする liを消して表示する
+      //       $('.lists').before('<div class="coment"></div>')
+      //       $('.coment').html('<p class="message">検索結果が見つかりませんでした。<br>別のキーワードで検索して下さい。</p>');
+      //       $('.lists').append('.coment');
+      //     }
+      //   }
+      //   function fffBox(data) {
+      //     $('.coment').html('<p class="message">通信エラー</p>');
+      //   }
+      // });
       $(function(){
-      $('#js-search-button').on('click',function(){ //js-search-button click
-        var keyword = $('#js-search-word').val(); //js-search-wordの値を取得して代入
-        var preword = '';　//一個前のキーワード　
-        if(keyword === preword) {　//同じキーワードの場合ページを追加して上に足していく 
-          page++;
-        } else{
-          page = 1;
-        }
-
-
-
-        $.ajax({
-        url: 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20130522',
-        type: 'GET',
-        datatype: 'json',
-        data: {
-          // 「区分:サービス固有パラメーター」を確認して、必要な情報をdata内に入れましょう。
-        applicationId: '1019399324990976605', // (今回はこのIDを使用してください)
-        booksGenreId: '001',
-        hits: 20,
-        keyword : keyword, //js-search-word の値
-        page : page, //page番号
-        },
-      }).done(function(data) {
-        if(data.count > 0){
-            $('ul').empty();//空にしないと下に更新されていく
-            $('.coment').css('display','none');
-            $.each(data.Items,function(i,item){ //第一引数：dataのItems(商品情報）を　ループ処理させる　第二引数　処理したい命令 連番と値をとる　
-              console.log(i,item);
-              var list = $('<li class="lists__item">' + '<div class="lists__item__inner">' + '<a href="' +
-                item.Item.itemUrl + '"class="lists__item__link" target="_blank">' + '<img src="' + item.Item
-                .largeImageUrl + '" class="lists__item__img" alt="' + item.Item.title + '">' +
-                '<p class="lists__item__detail">作品名：　' + item.Item.title + '</p>' +
-                '<p class="lists__item__detail">作者　：　' + item.Item.author + '</p>' +
-                '<p class="lists__item__detail">出版社：　' + item.Item.publisherName + '</p>' + '</a>' +
-                '</div>' + '</li>');
-              $('ul').append(list); //ulのDOMの中に入れる listを入れる 対象要素内の後に入れる
-            })
+        var preword = '';
+        var page = 1;
+        $('#js-search-button').on('click',function() {
+          searchBooks();
+        });
+        function searchBooks(){
+          var keyword = $('#js-search-word').val();
+          if(keyword === preword) {
+            page++;
+          } else {
+            page = 1;
+            keyword = preword;
+            $('lists').empty();
           }
-          if (data.count === 0) {//検索がヒットしないとき
-            $('ul').empty(); //ul要素を消して新しくする liを消して表示する
-            $('ul').before('<div class="coment"></div>')
+          $.ajax({
+            url: 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20130522',
+            type: 'GET',
+            datatype: 'json',
+            data: {
+              // 「区分:サービス固有パラメーター」を確認して、必要な情報をdata内に入れましょう。
+              applicationId: '1019399324990976605', // (今回はこのIDを使用してください)
+              booksGenreId: '001',
+              hits: 20,
+              page : page, //page番号
+            },
+        }).done(function(data) {
+          searchBooks(data);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+          showError(jqXHR, textStatus, errorThrown);
+        });
+        function showBooks(data) {
+          if (data.hits) {
+            var list = '';
+            $.each(data.Items, function(i,item) {
+              list += '<li class="lists__item">' +
+              '<div class="lists__item__inner">' +
+              '<a href="' + item.Item.itemUrl + '"class="lists__item__link" target="_blank">' +
+              '<img src="' + item.Item.largeImageUrl + '" class="lists__item__img" alt="' + item.Item.title + '">' +
+              '<p class="lists__item__detail">作品名：　' + item.Item.title + '</p>' +
+              '<p class="lists__item__detail">作者　：　' + item.Item.author + '</p>' +
+              '<p class="lists__item__detail">出版社：　' + item.Item.publisherName + '</p>' +
+              '</a>' +
+              '</div>' +
+              '</li>';
+            });
+            $('.lists').prepend(list);
+          } else {
+            $('.lists').empty(); 
+            $('.lists').before('<div class="coment"></div>')
             $('.coment').html('<p class="message">検索結果が見つかりませんでした。<br>別のキーワードで検索して下さい。</p>');
+            $('.lists').append('.coment');
           }
-        }).fail(function(data){
-            $('.coment').html('<p class="message">通信エラー</p>');
-        })
+        }
+      }
+      function showError(jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status == 400) {
+          alert(jqXHR.status + "パラメーターエラー(必須パラメーター不足)");
+        };
+      }
       });
-      });
+
     </script>
   </body>
 </html>
